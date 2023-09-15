@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "esModuleInterop": true,
+    "inlineSourceMap": false,
+    "listEmittedFiles": false,
+    "listFiles": false,
+    "moduleResolution": "Node",
+    "downlevelIteration": true,
+    "noFallthroughCasesInSwitch": true,
+    "pretty": true,
+    "rootDir": ".",
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "traceResolution": false,
+    "types": ["Node"]
+  },
+  "compileOnSave": false,
+  "exclude": ["node_modules", "dist", "test"],
+  "include": ["index.ts"]
+}

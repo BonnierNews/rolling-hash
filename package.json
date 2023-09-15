@@ -1,0 +1,28 @@
+{
+  "name": "rolling-hash",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/cjs/index.js",
+  "module": "/dist/mjs/index.js",
+  "types": "./dist/mjs/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "build": "rm -fr dist/* && tsc -p tsconfig-mjs.json && tsc -p tsconfig-cjs.json && ./add-package.sh",
+    "test": "mocha",
+    "dev": "npm run build && node ./dist/mjs/index.js"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/mjs/index.js",
+      "require": "./dist/cjs/index.js"
+    }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "crypto-js": "^4.1.1",
+    "mocha": "^10.2.0",
+    "typescript": "^5.2.2"
+  }
+}
