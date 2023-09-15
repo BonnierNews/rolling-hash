@@ -1,8 +1,10 @@
 # Rolling hash
 
-When hashing an ID there is always the easy way of doing it, you have a salt and a messsage then you get a hash back, but what if you don't have a salt?
+When hashing an ID you might not want it to stay the same **forever** so this library solves that by making it rolling.
 
-This package deals with that issue by making the hashed message rolling, that is once every 2 months it changes.
+The rolling occurs at a fixed date interval and in turn gives you a new fresh ID to use!
+
+This rolling hash library is supposed to be able to work with all kinds of encryption libraries and still give a valid rolling ID.
 
 ## Usage
 
@@ -18,20 +20,36 @@ The application uses as of currently Node 18.17.1.
 
 ### running
 
-The code is super simple.
+The code is super simple to use with a crypto Library.
+
+Simply input the given hashFunction, toBase64Function and toHexFunction and retrieve a rolledHash
 
 example:
 ```javascript
-import rollingHash from "rolling-encrypt"; // Or if need be, use require
+import rollingHash from "rolling-hash";
+import crypto from "node:crypto";
 
-const rolledHash = rollingHash("some id");
+async function hashFunction(str) {
+  const arrayBuffer = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
 
-// use rolledHash however you want after this!
+  return Array.from(new Uint8Array(arrayBuffer));
+}
 
+function toBase64Function(hash) {
+  return Buffer.from(hash).toString("base64");
+}
+
+function toHexFunction(hash) {
+  return hash.map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+const rolledHash = await rollingHash("foobar", { hashFunction, toBase64Function, toHexFunction })
+
+// use rolledHash as you want
 ```
 
 ## Disclaimer
 
-How often the rolling hash changes are up to change, we can not guarantee that it will stay at 2 months.
+How often the rolling hash changes are up to change, we can not guarantee that it will stay at the same interval forever.
 
 We use the Date class to handle the hash, if this is modified in anyway we cannot guarantee that this will work a 100% of the time.
