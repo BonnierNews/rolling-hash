@@ -21,12 +21,14 @@ The application uses as of currently Node 18.17.1.
 The code is super simple.
 
 example:
-
+```javascript
 import rollingHash from "rolling-encrypt"; // Or if need be, use require
 
 const rolledHash = rollingHash("some id");
 
 // use rolledHash however you want after this!
+
+```
 
 ## Disclaimer
 
