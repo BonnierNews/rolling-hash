@@ -12,7 +12,7 @@ This rolling hash library is supposed to be able to work with all kinds of encry
 
 Currently there is no NPM Package for this repo, so import it directly with npm and git like this.
 
-npm install BonnierNews/rolling-hash
+`npm install BonnierNews/rolling-hash`
 
 Or use another way you feel comfortable with.
 
