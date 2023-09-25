@@ -17,9 +17,9 @@
       "require": "./dist/cjs/index.js"
     }
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["Crypto", "Cryptography", "hash"],
+  "author": "Bonnier News",
+  "license": "MIT",
   "devDependencies": {
     "crypto-js": "^4.1.1",
     "mocha": "^10.2.0",
