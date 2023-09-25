@@ -10,17 +10,11 @@ This rolling hash library is supposed to be able to work with all kinds of encry
 
 ### Installing
 
-Currently there is no NPM Package for this repo, so import it directly with npm and git like this.
-
 `npm install BonnierNews/rolling-hash`
-
-Or use another way you feel comfortable with.
-
-The application uses as of currently Node 18.17.1.
 
 ### running
 
-The code is super simple to use with a crypto Library.
+The code is simple to use with any crypto Library.
 
 Simply input the given hashFunction, toBase64Function and toHexFunction and retrieve a rolledHash
 
