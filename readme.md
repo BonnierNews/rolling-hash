@@ -16,9 +16,10 @@ This rolling hash library is supposed to be able to work with all kinds of encry
 
 The code is simple to use with any crypto Library.
 
-Simply input the given hashFunction, toBase64Function and toHexFunction and retrieve a rolledHash
+Simply input the given hashFunction, toBase64Function and toHexFunction and retrieve a rolledHash.
 
-example:
+example with an async crypto library:
+
 ```javascript
 import rollingHash from "rolling-hash";
 import crypto from "node:crypto";
@@ -37,7 +38,30 @@ function toHexFunction(hash) {
   return hash.map((b) => b.toString(16).padStart(2, "0")).join("");
 }
 
-const rolledHash = await rollingHash("foobar", { hashFunction, toBase64Function, toHexFunction })
+const rolledHash = await rollingHash("foobar", { hashFunction, toBase64Function, toHexFunction });
+
+// use rolledHash as you want
+```
+
+example with a sync crypto library:
+
+```javascript
+import rollingHash from "rolling-hash";
+import cryptoJs from "crypto-js";
+
+function hashFunction(str) {
+  return cryptoJs.SHA256(str);
+}
+
+function toBase64Function(hash) {
+  return hash.toString(cryptoJs.enc.Base64);
+}
+
+function toHexFunction(hash) {
+  return hash.toString(cryptoJs.enc.Hex);
+}
+
+const rolledHash = rollingHash("foobar", { hashFunction, toBase64Function, toHexFunction });
 
 // use rolledHash as you want
 ```
