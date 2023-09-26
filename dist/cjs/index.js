@@ -17,7 +17,7 @@ function getRollingSalt(saltKey) {
     const rollingDate = new Date(date.setDate(date.getDate() - dateOffset));
     return `${rollingDate.getFullYear()}${Math.floor(rollingDate.getMonth() / 2)}`;
 }
-function rollingHash(message, { hashFunction, toBase64Function, toHexFunction }) {
+function promiseWrapper(message, { hashFunction, toBase64Function, toHexFunction }) {
     return __awaiter(this, void 0, void 0, function* () {
         const hashedMessage = yield hashFunction(message);
         const [first] = toBase64Function(hashedMessage);
@@ -25,5 +25,18 @@ function rollingHash(message, { hashFunction, toBase64Function, toHexFunction })
         const rolledHash = yield hashFunction(message + salt);
         return toHexFunction(rolledHash);
     });
+}
+function rollingHash(message, { hashFunction, toBase64Function, toHexFunction }) {
+    // to make this either an async operation or a sync operation we check if the given function is async
+    if (hashFunction.constructor.name === "AsyncFunction") {
+        return promiseWrapper(message, { hashFunction, toBase64Function, toHexFunction });
+    }
+    else {
+        const hashedMessage = hashFunction(message);
+        const [first] = toBase64Function(hashedMessage);
+        const salt = getRollingSalt(first);
+        const rolledHash = hashFunction(message + salt);
+        return toHexFunction(rolledHash);
+    }
 }
 exports.default = rollingHash;

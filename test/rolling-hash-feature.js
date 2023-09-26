@@ -82,8 +82,8 @@ describe("Rolling hash with CryptoJs", () => {
     return hash.toString(cryptoJs.enc.Hex);
   }
 
-  it("Validating rolling hash is hex encoded", async () => {
-    const ppid = await rollingHash("foo-bar", { hashFunction, toBase64Function, toHexFunction });
+  it("Validating rolling hash is hex encoded", () => {
+    const ppid = rollingHash("foo-bar", { hashFunction, toBase64Function, toHexFunction });
 
     assert.match(ppid, /[0-9A-Fa-f]{6}/g, "The encrypted id is not hex encoded");
   });
@@ -146,7 +146,7 @@ describe("Rolling hash for crypto-js and node:crypto at the same time", () => {
 
   it("we should get the same value from both rolling hash functions", async () => {
     const ppid1 = await rollingHash("foobar", { hashFunction: nodehashFunction, toBase64Function: nodetoBase64Function, toHexFunction: nodetoHexFunction });
-    const ppid2 = await rollingHash("foobar", { hashFunction: cryptoJshashFunction, toBase64Function: cryptoJstoBase64Function, toHexFunction: cryptoJstoHexFunction });
+    const ppid2 = rollingHash("foobar", { hashFunction: cryptoJshashFunction, toBase64Function: cryptoJstoBase64Function, toHexFunction: cryptoJstoHexFunction });
 
     assert.equal(ppid1, ppid2);
   });

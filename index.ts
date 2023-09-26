@@ -1,5 +1,5 @@
 interface Options<T> {
-  hashFunction: (string: string) => Promise<T>;
+  hashFunction: (string: string) => Promise<T> | T;
   toBase64Function: (hash: T) => string;
   toHexFunction: (hash: T) => string;
 }
@@ -16,7 +16,7 @@ function getRollingSalt(saltKey: string): string {
   return `${rollingDate.getFullYear()}${Math.floor(rollingDate.getMonth() / 2)}`;
 }
 
-async function rollingHash<T>(message: string, { hashFunction, toBase64Function, toHexFunction }: Options<T>) {
+async function promiseWrapper<T>(message: string, { hashFunction, toBase64Function, toHexFunction }: Options<T>) {
   const hashedMessage = await hashFunction(message);
 
   const [first] = toBase64Function(hashedMessage);
@@ -26,6 +26,24 @@ async function rollingHash<T>(message: string, { hashFunction, toBase64Function,
   const rolledHash = await hashFunction(message + salt);
 
   return toHexFunction(rolledHash);
+}
+
+function rollingHash<T>(message: string, { hashFunction, toBase64Function, toHexFunction }: Options<T>) {
+
+  // to make this either an async operation or a sync operation we check if the given function is async
+  if (hashFunction.constructor.name === "AsyncFunction") {
+    return promiseWrapper(message, { hashFunction, toBase64Function, toHexFunction })
+  } else {
+    const hashedMessage = hashFunction(message);
+
+    const [first] = toBase64Function(hashedMessage as T);
+
+    const salt = getRollingSalt(first);
+
+    const rolledHash = hashFunction(message + salt);
+
+    return toHexFunction(rolledHash as T);
+  }
 }
 
 
