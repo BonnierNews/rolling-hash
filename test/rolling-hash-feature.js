@@ -13,7 +13,7 @@ class MockDate extends Date {
   }
 }
 
-describe("Rolling hash with node:crypto", () => {
+describe("Rolling hash with node:crypto async", () => {
   beforeEach(() => {
     customDate = "2022-01-01T00:00:00.000Z";
     // eslint-disable-next-line no-undef
@@ -63,7 +63,7 @@ describe("Rolling hash with node:crypto", () => {
   });
 });
 
-describe("Rolling hash with CryptoJs", () => {
+describe("Rolling hash with CryptoJs sync", () => {
   beforeEach(() => {
     customDate = "2022-01-01T00:00:00.000Z";
     // eslint-disable-next-line no-undef

@@ -1,5 +1,5 @@
 interface Options<T> {
-    hashFunction: (string: string) => Promise<T> | T;
+    hashFunction: (message: string) => Promise<T> | T;
     toBase64Function: (hash: T) => string;
     toHexFunction: (hash: T) => string;
 }

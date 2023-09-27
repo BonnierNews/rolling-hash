@@ -1,5 +1,5 @@
 interface Options<T> {
-  hashFunction: (string: string) => Promise<T> | T;
+  hashFunction: (message: string) => Promise<T> | T;
   toBase64Function: (hash: T) => string;
   toHexFunction: (hash: T) => string;
 }
@@ -29,21 +29,20 @@ async function promiseWrapper<T>(message: string, { hashFunction, toBase64Functi
 }
 
 function rollingHash<T>(message: string, { hashFunction, toBase64Function, toHexFunction }: Options<T>) {
-
   // to make this either an async operation or a sync operation we check if the given function is async
   if (hashFunction.constructor.name === "AsyncFunction") {
     return promiseWrapper(message, { hashFunction, toBase64Function, toHexFunction })
-  } else {
-    const hashedMessage = hashFunction(message);
-
-    const [first] = toBase64Function(hashedMessage as T);
-
-    const salt = getRollingSalt(first);
-
-    const rolledHash = hashFunction(message + salt);
-
-    return toHexFunction(rolledHash as T);
   }
+
+  const hashedMessage = hashFunction(message);
+
+  const [first] = toBase64Function(hashedMessage as T);
+
+  const salt = getRollingSalt(first);
+
+  const rolledHash = hashFunction(message + salt);
+
+  return toHexFunction(rolledHash as T);
 }
 
 

@@ -18,12 +18,10 @@ function rollingHash(message, { hashFunction, toBase64Function, toHexFunction })
     if (hashFunction.constructor.name === "AsyncFunction") {
         return promiseWrapper(message, { hashFunction, toBase64Function, toHexFunction });
     }
-    else {
-        const hashedMessage = hashFunction(message);
-        const [first] = toBase64Function(hashedMessage);
-        const salt = getRollingSalt(first);
-        const rolledHash = hashFunction(message + salt);
-        return toHexFunction(rolledHash);
-    }
+    const hashedMessage = hashFunction(message);
+    const [first] = toBase64Function(hashedMessage);
+    const salt = getRollingSalt(first);
+    const rolledHash = hashFunction(message + salt);
+    return toHexFunction(rolledHash);
 }
 export default rollingHash;
