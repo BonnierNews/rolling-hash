@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const BASE64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 function getRollingSalt(saltKey) {
     const date = new Date();
-    // Find the offset (0-63) (this will always be the same for a user email)
+    // Find the offset (0-63) (this will be the same for any identical saltKey)
     const dateOffset = BASE64.indexOf(saltKey);
     const rollingDate = new Date(date.setDate(date.getDate() - dateOffset));
     return `${rollingDate.getFullYear()}${Math.floor(rollingDate.getMonth() / 2)}`;
