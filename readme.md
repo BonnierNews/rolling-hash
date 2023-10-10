@@ -66,6 +66,12 @@ const rolledHash = rollingHash("foobar", { hashFunction, toBase64Function, toHex
 // use rolledHash as you want
 ```
 
+if using commonJS:
+
+```javascript
+const { default: rollingHash } = require("@bonniernews/rolling-hash");
+```
+
 ## Disclaimer
 
 The interval at which the rolling of the hash is performed may change.
