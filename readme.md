@@ -21,7 +21,7 @@ Simply input the given hashFunction, toBase64Function and toHexFunction and retr
 example with an async crypto library:
 
 ```javascript
-import rollingHash from "rolling-hash";
+import rollingHash from "@bonniernews/rolling-hash";
 import crypto from "node:crypto";
 
 async function hashFunction(str) {
@@ -46,7 +46,7 @@ const rolledHash = await rollingHash("foobar", { hashFunction, toBase64Function,
 example with a sync crypto library:
 
 ```javascript
-import rollingHash from "rolling-hash";
+import rollingHash from "@bonniernews/rolling-hash";
 import cryptoJs from "crypto-js";
 
 function hashFunction(str) {
