@@ -1,5 +1,5 @@
 {
-  "name": "rolling-hash",
+  "name": "@bonniernews/rolling-hash",
   "version": "1.0.0",
   "description": "",
   "main": "./dist/cjs/index.js",
