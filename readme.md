@@ -10,7 +10,7 @@ This rolling hash library is supposed to be able to work with all kinds of encry
 
 ### Installing
 
-`npm install BonnierNews/rolling-hash`
+`npm install @bonniernews/rolling-hash`
 
 ### running
 
@@ -68,6 +68,6 @@ const rolledHash = rollingHash("foobar", { hashFunction, toBase64Function, toHex
 
 ## Disclaimer
 
-How often the rolling hash changes are up to change, we can not guarantee that it will stay at the same interval forever.
+The interval at which the rolling of the hash is performed may change.
 
 We use the Date class to handle the hash, if this is modified in anyway we cannot guarantee that this will work a 100% of the time.
