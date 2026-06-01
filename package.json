@@ -17,10 +17,15 @@
       "require": "./dist/cjs/index.js"
     }
   },
-  "keywords": ["Crypto", "Cryptography", "hash"],
+  "keywords": [
+    "Crypto",
+    "Cryptography",
+    "hash"
+  ],
   "author": "Bonnier News",
   "license": "MIT",
   "devDependencies": {
+    "@types/node": "^25.9.1",
     "crypto-js": "^4.1.1",
     "mocha": "^10.2.0",
     "typescript": "^5.2.2"

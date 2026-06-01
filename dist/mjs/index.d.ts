@@ -3,5 +3,5 @@ interface Options<T> {
     toBase64Function: (hash: T) => string;
     toHexFunction: (hash: T) => string;
 }
-declare function rollingHash<T>(message: string, { hashFunction, toBase64Function, toHexFunction }: Options<T>): string | Promise<string>;
+declare function rollingHash<T>(message: string, options: Options<T>): Promise<string> | string;
 export default rollingHash;
