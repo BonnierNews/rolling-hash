@@ -27,7 +27,11 @@
   "devDependencies": {
     "@types/node": "^25.9.1",
     "crypto-js": "^4.1.1",
-    "mocha": "^10.2.0",
+    "mocha": "^11.7.6",
     "typescript": "^5.2.2"
+  },
+  "overrides": {
+    "serialize-javascript": "^7.0.5",
+    "diff": "^8.0.3"
   }
 }
