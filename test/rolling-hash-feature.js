@@ -111,6 +111,38 @@ describe("Rolling hash with CryptoJs sync", () => {
   });
 });
 
+describe("Rolling hash with a transpiled async hashFunction (plain function returning a Promise)", () => {
+  beforeEach(() => {
+    customDate = "2022-01-01T00:00:00.000Z";
+    // eslint-disable-next-line no-undef
+    global.Date = MockDate;
+  });
+
+  // Plain function returning a Promise — the shape a transpiled async function takes.
+  function hashFunction(str) {
+    return crypto.subtle
+      .digest("SHA-256", new TextEncoder().encode(str))
+      .then((arrayBuffer) => Array.from(new Uint8Array(arrayBuffer)));
+  }
+
+  function toBase64Function(hash) {
+    return Buffer.from(hash).toString("base64");
+  }
+
+  function toHexFunction(hash) {
+    return hash.map((b) => b.toString(16).padStart(2, "0")).join("");
+  }
+
+  it("routes to the async path and resolves to a hex hash", async () => {
+    const result = rollingHash("foo-bar", { hashFunction, toBase64Function, toHexFunction });
+
+    assert.ok(typeof result.then === "function", "expected a Promise to be returned");
+
+    const ppid = await result;
+    assert.match(ppid, /[0-9A-Fa-f]{64}/g, "The encrypted id is not hex encoded");
+  });
+});
+
 describe("Rolling hash for crypto-js and node:crypto at the same time", () => {
   before(() => {
     customDate = "2022-01-01T00:00:00.000Z";
