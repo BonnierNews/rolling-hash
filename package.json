@@ -1,6 +1,6 @@
 {
   "name": "@bonniernews/rolling-hash",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "description": "",
   "main": "./dist/cjs/index.js",
   "module": "/dist/mjs/index.js",
@@ -9,6 +9,7 @@
   "scripts": {
     "build": "rm -fr dist/* && tsc -p tsconfig-mjs.json && tsc -p tsconfig-cjs.json && ./add-package.sh",
     "test": "mocha",
+    "lint:es6": "es-check es6 ./dist/cjs/index.js && es-check es6 --module ./dist/mjs/index.js",
     "dev": "npm run build && node ./dist/mjs/index.js"
   },
   "exports": {
@@ -17,12 +18,23 @@
       "require": "./dist/cjs/index.js"
     }
   },
-  "keywords": ["Crypto", "Cryptography", "hash"],
+  "keywords": [
+    "Crypto",
+    "Cryptography",
+    "hash"
+  ],
   "author": "Bonnier News",
   "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
   "devDependencies": {
     "crypto-js": "^4.1.1",
+    "es-check": "^9.6.4",
     "mocha": "^10.2.0",
     "typescript": "^5.2.2"
+  },
+  "overrides": {
+    "serialize-javascript": "^7.0.4"
   }
 }

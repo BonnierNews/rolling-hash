@@ -1,5 +1,7 @@
+type MaybePromise<T> = T | Promise<T>;
+
 interface Options<T> {
-  hashFunction: (message: string) => Promise<T> | T;
+  hashFunction: (message: string) => MaybePromise<T>;
   toBase64Function: (hash: T) => string;
   toHexFunction: (hash: T) => string;
 }
@@ -16,34 +18,21 @@ function getRollingSalt(saltKey: string): string {
   return `${rollingDate.getFullYear()}${Math.floor(rollingDate.getMonth() / 2)}`;
 }
 
-async function promiseWrapper<T>(message: string, { hashFunction, toBase64Function, toHexFunction }: Options<T>) {
-  const hashedMessage = await hashFunction(message);
-
-  const [first] = toBase64Function(hashedMessage);
-
-  const salt = getRollingSalt(first);
-
-  const rolledHash = await hashFunction(message + salt);
-
-  return toHexFunction(rolledHash);
+function isPromise<T>(value: MaybePromise<T>): value is Promise<T> {
+  return value != null && typeof (value as Promise<T>).then === "function";
 }
 
-function rollingHash<T>(message: string, { hashFunction, toBase64Function, toHexFunction }: Options<T>) {
-  // to make this either an async operation or a sync operation we check if the given function is async
-  if (hashFunction.constructor.name === "AsyncFunction") {
-    return promiseWrapper(message, { hashFunction, toBase64Function, toHexFunction })
-  }
-
-  const hashedMessage = hashFunction(message);
-
-  const [first] = toBase64Function(hashedMessage as T);
-
-  const salt = getRollingSalt(first);
-
-  const rolledHash = hashFunction(message + salt);
-
-  return toHexFunction(rolledHash as T);
+function andThen<A, B>(value: MaybePromise<A>, fn: (value: A) => MaybePromise<B>): MaybePromise<B> {
+  return isPromise(value) ? value.then(fn) : fn(value);
 }
 
+function rollingHash<T>(message: string, { hashFunction, toBase64Function, toHexFunction }: Options<T>): MaybePromise<string> {
+  return andThen(hashFunction(message), (hashedMessage) => {
+    const [first] = toBase64Function(hashedMessage);
+    const salt = getRollingSalt(first);
+
+    return andThen(hashFunction(message + salt), toHexFunction);
+  });
+}
 
 export default rollingHash;

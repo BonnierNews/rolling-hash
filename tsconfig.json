@@ -11,7 +11,7 @@
     "rootDir": ".",
     "strict": true,
     "traceResolution": false,
-    "types": ["Node"]
+    "types": []
   },
   "compileOnSave": false,
   "exclude": ["node_modules", "dist", "test"],
