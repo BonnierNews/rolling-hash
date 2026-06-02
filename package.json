@@ -26,7 +26,7 @@
   "author": "Bonnier News",
   "license": "MIT",
   "engines": {
-    "node": ">=22"
+    "node": ">=18"
   },
   "devDependencies": {
     "crypto-js": "^4.1.1",
