@@ -14,7 +14,7 @@ This rolling hash library is supposed to be able to work with all kinds of encry
 
 ### Requirements
 
-Node.js 22 or newer.
+Node.js 20 or newer.
 
 ### running
 
