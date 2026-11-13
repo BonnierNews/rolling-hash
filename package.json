@@ -26,12 +26,12 @@
   "author": "Bonnier News",
   "license": "MIT",
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   },
   "devDependencies": {
     "crypto-js": "^4.1.1",
     "es-check": "^9.6.4",
-    "mocha": "^10.2.0",
+    "mocha": "^11.8.0",
     "typescript": "^5.2.2"
   },
   "overrides": {
