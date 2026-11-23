@@ -12,6 +12,10 @@ This rolling hash library is supposed to be able to work with all kinds of encry
 
 `npm install @bonniernews/rolling-hash`
 
+### Requirements
+
+Node.js 22 or newer.
+
 ### running
 
 The code is simple to use with any crypto Library.
